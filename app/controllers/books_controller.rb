@@ -2,25 +2,45 @@ class BooksController < ApplicationController
   def index
     @books = Book.all
 
-    render json: @books, status: 200
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @users }
+      format.json { render :json => @users }
+    end
   end
 
   def destroy
     book = Book.find_by(id: params[:id])
     if book
       book.destroy
-      render json: { result: 'book deleted successfully' }, status: 200
+      respond_to do |format|
+        format.html # index.html.erb
+        format.xml  { render :xml => { result: 'book deleted successfully' } }
+        format.json { render :json => { result: 'book deleted successfully' } }
+      end
     else
-      render json: { result: 'book doesn not exist' }, status: 404
+      respond_to do |format|
+        format.html # index.html.erb
+        format.xml  { render :xml => { result: 'book doesn not exist' } }
+        format.json { render :json => { result: 'book doesn not exist' } }
+      end
     end
   end
 
   def create
     book = Book.new(books_params)
     if book.save
-      render json: { result: 'book created successfully' }, status: 200
+      respond_to do |format|
+        format.html # index.html.erb
+        format.xml  { render :xml => { result: 'book created successfully' } }
+        format.json { render :json => { result: 'book created successfully' } }
+      end
     else
-      render json: { result: 'the book was not created' }, status: 404
+      respond_to do |format|
+        format.html # index.html.erb
+        format.xml  { render :xml => { result: 'the book was not created' } }
+        format.json { render :json => { result: 'the book was not created' } }
+      end
     end  
   end
 
